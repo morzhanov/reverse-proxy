@@ -1,0 +1,49 @@
+version: "3"
+services:
+  app1:
+    build: .
+    container_name: rproxy_app1
+    ports:
+      - "8081:8081"
+    environment:
+      PORT: 8081
+    networks:
+      - rproxy
+  app2:
+    build: .
+    container_name: rproxy_app2
+    ports:
+      - "8082:8082"
+    environment:
+        PORT: 8082
+    networks:
+      - rproxy
+
+  apache:
+    build: ./apache
+    container_name: rproxy_apache
+    ports:
+      - "3001:3001"
+    networks:
+      - rproxy
+
+#  envoy:
+#    image:
+#    container_name: rproxy_envoy
+#
+#    network: rproxy
+#
+#  haproxy:
+#    image:
+#    container_name: rproxy_haproxy
+#
+#    network: rproxy
+#
+#  nginx:
+#    image:
+#    container_name: rproxy_nginx
+#
+#    network: rproxy
+
+networks:
+  rproxy:

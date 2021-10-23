@@ -3,7 +3,7 @@ FROM ubuntu
 COPY httpd.conf /usr/local/apache2/conf/httpd.conf
 RUN mkdir -p /usr/local/apache2/conf/sites/
 
-EXPOSE 3001
+EXPOSE 3004
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true

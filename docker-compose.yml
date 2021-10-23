@@ -4,48 +4,64 @@ services:
     build: .
     container_name: rproxy_app1
     ports:
-      - "8081:8081"
+      - "3002:3002"
     environment:
-      PORT: 8081
+      PORT: 3002
     networks:
-      - rproxy
+      rproxy:
+        ipv4_address: 10.5.0.2
+
   app2:
     build: .
     container_name: rproxy_app2
     ports:
-      - "8082:8082"
+      - "3003:3003"
     environment:
-        PORT: 8082
+        PORT: 3003
     networks:
-      - rproxy
+      rproxy:
+        ipv4_address: 10.5.0.3
 
   apache:
     build: ./apache
     container_name: rproxy_apache
     ports:
-      - "3001:3001"
+      - "3004:3004"
     networks:
-      - rproxy
+      rproxy:
+        ipv4_address: 10.5.0.4
 
   envoy:
     build: ./envoy
     container_name: rproxy_envoy
     ports:
-      - "3002:3002"
+      - "3005:3005"
     networks:
-      - rproxy
-#
-#  haproxy:
-#    image:
-#    container_name: rproxy_haproxy
-#
-#    network: rproxy
-#
-#  nginx:
-#    image:
-#    container_name: rproxy_nginx
-#
-#    network: rproxy
+      rproxy:
+        ipv4_address: 10.5.0.5
+
+  haproxy:
+    build: ./haproxy
+    container_name: rproxy_haproxy
+    ports:
+      - "3006:3006"
+    networks:
+      rproxy:
+        ipv4_address: 10.5.0.6
+
+  nginx:
+    build: ./nginx
+    container_name: rproxy_nginx
+    ports:
+      - "3007:3007"
+    networks:
+      rproxy:
+        ipv4_address: 10.5.0.7
 
 networks:
   rproxy:
+    driver: bridge
+    ipam:
+      config:
+          - subnet: 10.5.0.0/16
+            gateway: 10.5.0.1

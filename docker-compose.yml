@@ -27,11 +27,13 @@ services:
     networks:
       - rproxy
 
-#  envoy:
-#    image:
-#    container_name: rproxy_envoy
-#
-#    network: rproxy
+  envoy:
+    build: ./envoy
+    container_name: rproxy_envoy
+    ports:
+      - "3002:3002"
+    networks:
+      - rproxy
 #
 #  haproxy:
 #    image:
